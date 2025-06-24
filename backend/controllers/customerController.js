@@ -4,7 +4,6 @@ import User from "../models/users_model.js";
 import ActivityLog from "../models/activitylog_model.js";
 import { logActivity } from "../utils/logActivity.js";
 import Payment from "../models/payment_model.js";
-import AlamatId from "../models/alamat_id_model.js";
 
 export const getCustomers = async (req, res) => {
   try {
@@ -19,7 +18,6 @@ export const getCustomers = async (req, res) => {
       include: [
         { model: Package, attributes: ['name'] },
         { model: User, attributes: ['username'] },
-        { model: AlamatId, attributes: ['nama'] }
       ]
     });
 
@@ -29,7 +27,6 @@ export const getCustomers = async (req, res) => {
       return {
         ...obj,
         package_name: obj.Package?.name || null,
-        alamat_nama: obj.AlamatId?.nama || null
       };
     });
 
@@ -57,10 +54,6 @@ export const getCustomerById = async (req, res) => {
           model: User,
           attributes: ["username"],
         },
-        {
-          model: AlamatId,
-          attributes: ["nama"],
-        },
       ],
     });
 
@@ -83,7 +76,6 @@ export const getCustomerById = async (req, res) => {
     // Tambahkan status, handled_by (username), dan alamat_nama ke response
     const customerObj = customer.toJSON();
     customerObj.handled_by_username = customerObj.User?.username || null;
-    customerObj.alamat_nama = customerObj.AlamatId?.nama || null;
 
     res.json({
       customer: customerObj,

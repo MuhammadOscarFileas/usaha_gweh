@@ -323,7 +323,7 @@ export default function Dashboard({ user, token }) {
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap', flexDirection: isMobile ? 'column' : 'row', maxWidth: 1400, mx: 'auto', px: 2 }}>
-          {user.role === 'admin' || user.role === 'superadmin' ? (
+          {(user.role === 'admin' || user.role === 'superadmin' || user.role === 'subadmin') ? (
             <Button 
               variant="contained" 
               color="primary" 

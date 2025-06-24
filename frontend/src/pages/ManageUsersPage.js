@@ -22,9 +22,11 @@ export default function ManageUsersPage({ token }) {
     try {
       const res = await fetch(`${API}/all`, { headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json();
-      setUsers(data);
+      setUsers(Array.isArray(data) ? data : []);
+      if (!Array.isArray(data)) setError(data.msg || 'Data user tidak valid atau token expired.');
     } catch (e) {
       setError('Gagal mengambil data user');
+      setUsers([]);
     } finally {
       setLoading(false);
     }
@@ -106,7 +108,7 @@ export default function ManageUsersPage({ token }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map(u => (
+            {Array.isArray(users) && users.length > 0 ? users.map(u => (
               <TableRow key={u.id}>
                 <TableCell>{u.username}</TableCell>
                 <TableCell>{u.role}</TableCell>
@@ -115,7 +117,11 @@ export default function ManageUsersPage({ token }) {
                   <IconButton color="error" onClick={() => handleDelete(u.id)}><DeleteIcon /></IconButton>
                 </TableCell>
               </TableRow>
-            ))}
+            )) : (
+              <TableRow>
+                <TableCell colSpan={4} align="center">Tidak ada data user</TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       )}

@@ -599,24 +599,22 @@ export default function Dashboard({ user, token }) {
                   ))}
                 </TextField>
               </Grid>
-              {(user.role === 'admin' || user.role === 'superadmin') && (
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    select
-                    label="Handled By (Subadmin)"
-                    name="handled_by"
-                    value={form.handled_by || ''}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="normal"
-                  >
-                    <MenuItem value="">- Tidak Ditentukan -</MenuItem>
-                    {subadmins.map(sa => (
-                      <MenuItem key={sa.id} value={sa.id}>{sa.username}</MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-              )}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  select
+                  label="Handled By (Subadmin)"
+                  name="handled_by"
+                  value={form.handled_by || ''}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                >
+                  <MenuItem value="">- Tidak Ditentukan -</MenuItem>
+                  {subadmins.map(sa => (
+                    <MenuItem key={sa.id} value={sa.id}>{sa.username}</MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   label="Alamat Id"

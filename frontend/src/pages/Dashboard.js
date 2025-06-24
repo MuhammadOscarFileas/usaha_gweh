@@ -37,6 +37,7 @@ export default function Dashboard({ user, token }) {
     package_id: '',
     alamat_id_cust: '',
     handled_by: '',
+    alamat_id: '',
   });
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -161,7 +162,7 @@ export default function Dashboard({ user, token }) {
   const handleClose = () => {
     setOpen(false);
     setForm({
-      name: '', nik: '', address: '', phone: '', start_date: '', end_date: '', google_maps_link: '', package_id: '', alamat_id_cust: '', handled_by: '',
+      name: '', nik: '', address: '', phone: '', start_date: '', end_date: '', google_maps_link: '', package_id: '', alamat_id_cust: '', handled_by: '', alamat_id: '',
     });
     setError('');
     setSuccess('');
@@ -189,6 +190,7 @@ export default function Dashboard({ user, token }) {
         package_id: selectedCustomer.package_id ? String(selectedCustomer.package_id) : '',
         handled_by: selectedCustomer.handled_by || '',
         alamat_id_cust: selectedCustomer.alamat_id_cust || '',
+        alamat_id: selectedCustomer.alamat_id || '',
       });
       setEditId(selectedCustomer.id);
       setOpen(true);
@@ -215,6 +217,7 @@ export default function Dashboard({ user, token }) {
             package_id: Number(form.package_id),
             google_maps_link: form.google_maps_link || null,
             alamat_id_cust: Number(form.alamat_id_cust),
+            alamat_id: Number(form.alamat_id),
           })
         });
         data = await res.json();
@@ -233,6 +236,7 @@ export default function Dashboard({ user, token }) {
             package_id: Number(form.package_id),
             google_maps_link: form.google_maps_link || null,
             alamat_id_cust: Number(form.alamat_id_cust),
+            alamat_id: Number(form.alamat_id),
           })
         });
         data = await res.json();
@@ -613,6 +617,17 @@ export default function Dashboard({ user, token }) {
                   </TextField>
                 </Grid>
               )}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Alamat Id"
+                  name="alamat_id"
+                  value={form.alamat_id || ''}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                  placeholder="Masukkan Alamat Id (opsional)"
+                />
+              </Grid>
             </Grid>
             {error && <Typography color="error" fontSize={14} mt={2}>{error}</Typography>}
             {success && <Typography color="primary" fontSize={14} mt={2}>{success}</Typography>}

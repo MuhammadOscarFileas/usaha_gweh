@@ -101,7 +101,6 @@ const menuItems = [
   { label: 'Pelanggan', icon: <PeopleIcon />, path: '/dashboard' },
   { label: 'Paket', icon: <InventoryIcon />, path: '/dashboard/paket', adminOrSuperadmin: true },
   { label: 'Statistik', icon: <BarChartIcon />, path: '/dashboard/statistik' },
-  { label: 'Kelola Alamat', icon: <HomeIcon />, path: '/dashboard/alamat', adminOrSuperadmin: true },
   { label: 'Pengaturan', icon: <SettingsIcon />, path: '/dashboard/settings' },
   { label: 'Kelola Admin & Subadmin', icon: <PeopleIcon />, path: '/dashboard/manage-users', superadminOnly: true },
   { label: 'Log Aktivitas', icon: <BarChartIcon />, path: '/dashboard/activity-logs', superadminOnly: true },

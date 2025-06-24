@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 
-const API = 'https://usahagweh-production.up.railway.app/abira-api/alamat';
+const API = 'https://usahagweh-production.up.railway.app/abira-api/customers/alamat';
 
 export default function ManageAlamatPage({ token, user }) {
   const [alamat, setAlamat] = useState([]);

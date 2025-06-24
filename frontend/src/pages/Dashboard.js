@@ -36,6 +36,7 @@ export default function Dashboard({ user, token }) {
     google_maps_link: '',
     package_id: '',
     alamat_id_cust: '',
+    handled_by: '',
   });
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -173,7 +174,7 @@ export default function Dashboard({ user, token }) {
   const handleClose = () => {
     setOpen(false);
     setForm({
-      name: '', alias: '', address: '', phone: '', start_date: '', end_date: '', google_maps_link: '', package_id: '', alamat_id_cust: '',
+      name: '', alias: '', address: '', phone: '', start_date: '', end_date: '', google_maps_link: '', package_id: '', alamat_id_cust: '', handled_by: '',
     });
     setError('');
     setSuccess('');

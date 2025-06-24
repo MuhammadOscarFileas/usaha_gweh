@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware global
 app.use(cors({
-  origin: ["https://usaha-gweh.vercel.app"],
+  origin: ["https://usaha-gweh.vercel.app", "https://abira-net.vercel.app"],
   credentials: true
 }));
 app.use(express.json());

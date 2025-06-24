@@ -7,6 +7,7 @@ import {
   deleteCustomer
 } from "../controllers/customerController.js";
 import { verifyToken } from "../middleware/verifytoken.js";
+import { getAllAlamat } from "../controllers/alamat_id_controller.js";
 //import multer from "multer";
 
 const router = express.Router();
@@ -26,5 +27,7 @@ router.post("/customers", verifyToken, createCustomer);
 router.get("/customers/:id", verifyToken, getCustomerById);
 router.put("/customers/:id", verifyToken, updateCustomer);
 router.delete("/customers/:id", verifyToken, deleteCustomer);
+
+router.get("/alamat", verifyToken, getAllAlamat);
 
 export default router;

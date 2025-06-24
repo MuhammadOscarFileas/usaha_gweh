@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import db from "../config/database.js";
 import User from "./users_model.js";
 import Package from "./package_model.js";
+import AlamatId from "./alamat_id_model.js";
 
 const Customer = db.define("Customer", {
   name: {
@@ -34,6 +35,14 @@ const Customer = db.define("Customer", {
     type: DataTypes.ENUM('active', 'inactive'),
     allowNull: false,
     defaultValue: 'active'
+  },
+  alamat_id_cust: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'alamat_id',
+      key: 'id'
+    }
   }
 }, {
   tableName: "customers",
@@ -46,5 +55,7 @@ Customer.belongsTo(User, { foreignKey: "handled_by" });
 
 Package.hasMany(Customer, { foreignKey: "package_id" });
 Customer.belongsTo(Package, { foreignKey: "package_id" });
+
+Customer.belongsTo(AlamatId, { foreignKey: "alamat_id_cust" });
 
 export default Customer;

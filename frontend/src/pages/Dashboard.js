@@ -35,6 +35,7 @@ export default function Dashboard({ user, token }) {
     end_date: '',
     google_maps_link: '',
     package_id: '',
+    alamat_id_cust: '',
   });
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -58,6 +59,7 @@ export default function Dashboard({ user, token }) {
   const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
   const { collapsed } = React.useContext(SidebarContext);
   const sidebarWidth = isMobile ? 0 : (collapsed ? 64 : 220);
+  const [alamatList, setAlamatList] = useState([]);
 
   const navigate = useNavigate();
 
@@ -149,6 +151,18 @@ export default function Dashboard({ user, token }) {
       .catch(() => setPayments([]));
   }, [year, token, open]);
 
+  // Fetch alamat untuk dropdown
+  useEffect(() => {
+    if (open) {
+      fetch('https://usahagweh-production.up.railway.app/abira-api/customers/alamat', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(res => res.json())
+        .then(data => setAlamatList(data))
+        .catch(() => setAlamatList([]));
+    }
+  }, [open, token]);
+
   useEffect(() => {
     if (filterBarRef.current) {
       setFilterBarHeight(filterBarRef.current.offsetHeight);
@@ -159,7 +173,7 @@ export default function Dashboard({ user, token }) {
   const handleClose = () => {
     setOpen(false);
     setForm({
-      name: '', alias: '', address: '', phone: '', start_date: '', end_date: '', google_maps_link: '', package_id: ''
+      name: '', alias: '', address: '', phone: '', start_date: '', end_date: '', google_maps_link: '', package_id: '', alamat_id_cust: '',
     });
     setError('');
     setSuccess('');
@@ -186,6 +200,7 @@ export default function Dashboard({ user, token }) {
         google_maps_link: selectedCustomer.google_maps_link || '',
         package_id: selectedCustomer.package_id ? String(selectedCustomer.package_id) : '',
         handled_by: selectedCustomer.handled_by || '',
+        alamat_id_cust: selectedCustomer.alamat_id_cust || '',
       });
       setEditId(selectedCustomer.id);
       setOpen(true);
@@ -211,6 +226,7 @@ export default function Dashboard({ user, token }) {
             handled_by: user.role === 'admin' ? (form.handled_by || null) : user.id,
             package_id: Number(form.package_id),
             google_maps_link: form.google_maps_link || null,
+            alamat_id_cust: Number(form.alamat_id_cust),
           })
         });
         data = await res.json();
@@ -228,6 +244,7 @@ export default function Dashboard({ user, token }) {
             handled_by: user.role === 'admin' ? (form.handled_by || null) : user.id,
             package_id: Number(form.package_id),
             google_maps_link: form.google_maps_link || null,
+            alamat_id_cust: Number(form.alamat_id_cust),
           })
         });
         data = await res.json();
@@ -314,7 +331,7 @@ export default function Dashboard({ user, token }) {
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap', flexDirection: isMobile ? 'column' : 'row', maxWidth: 1400, mx: 'auto', px: 2 }}>
-          {user.role === 'admin' && (
+          {user.role === 'admin' || user.role === 'superadmin' ? (
             <Button 
               variant="contained" 
               color="primary" 
@@ -323,7 +340,7 @@ export default function Dashboard({ user, token }) {
             >
               + Tambah Pelanggan
             </Button>
-          )}
+          ) : null}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: isMobile ? '100%' : 'auto' }}>
             <Typography variant="h6" sx={{ fontSize: isMobile ? '1rem' : '1.25rem' }}>
               Tahun:
@@ -586,6 +603,22 @@ export default function Dashboard({ user, token }) {
                 >
                   {packages.map(pkg => (
                     <MenuItem key={pkg.id} value={pkg.id}>{pkg.name} (Rp{pkg.price})</MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  select
+                  label="Alamat (Pilih dari master alamat)"
+                  name="alamat_id_cust"
+                  value={form.alamat_id_cust || ''}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                  required
+                >
+                  {alamatList.map(alamat => (
+                    <MenuItem key={alamat.id} value={alamat.id}>{alamat.nama}</MenuItem>
                   ))}
                 </TextField>
               </Grid>

@@ -126,4 +126,30 @@ export const getAllActivityLogs = async (req, res) => {
     include: [{ model: User, attributes: ['username'] }]
   });
   res.json(logs);
+};
+
+export const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { username, password } = req.body;
+  const userToEdit = await User.findByPk(id);
+  if (!userToEdit) return res.status(404).json({ msg: 'User tidak ditemukan' });
+
+  // Hanya admin bisa edit admin, superadmin bisa edit semua kecuali superadmin lain
+  if (req.user.role === 'admin') {
+    if (userToEdit.role !== 'admin') return res.status(403).json({ msg: 'Admin hanya bisa edit admin lain' });
+  } else if (req.user.role === 'superadmin') {
+    if (userToEdit.role === 'superadmin' && req.user.id !== userToEdit.id) {
+      return res.status(403).json({ msg: 'Superadmin tidak bisa edit superadmin lain' });
+    }
+  } else {
+    return res.status(403).json({ msg: 'Tidak diizinkan' });
+  }
+
+  if (username) userToEdit.username = username;
+  if (password) {
+    const bcrypt = (await import('bcrypt')).default;
+    userToEdit.password = await bcrypt.hash(password, 10);
+  }
+  await userToEdit.save();
+  res.json({ msg: 'User berhasil diupdate', user: { id: userToEdit.id, username: userToEdit.username, role: userToEdit.role } });
 }; 

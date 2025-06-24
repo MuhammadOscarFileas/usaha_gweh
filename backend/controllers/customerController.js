@@ -4,6 +4,7 @@ import User from "../models/users_model.js";
 import ActivityLog from "../models/activitylog_model.js";
 import { logActivity } from "../utils/logActivity.js";
 import Payment from "../models/payment_model.js";
+import AlamatId from "../models/alamat_id_model.js";
 
 export const getCustomers = async (req, res) => {
   try {
@@ -17,16 +18,18 @@ export const getCustomers = async (req, res) => {
       where,
       include: [
         { model: Package, attributes: ['name'] },
-        { model: User, attributes: ['username'] }
+        { model: User, attributes: ['username'] },
+        { model: AlamatId, attributes: ['nama'] }
       ]
     });
 
-    // Map hasil agar package_name ada di root object
+    // Map hasil agar package_name dan alamat_nama ada di root object
     const result = customers.map(c => {
       const obj = c.toJSON();
       return {
         ...obj,
-        package_name: obj.Package?.name || null
+        package_name: obj.Package?.name || null,
+        alamat_nama: obj.AlamatId?.nama || null
       };
     });
 
@@ -54,6 +57,10 @@ export const getCustomerById = async (req, res) => {
           model: User,
           attributes: ["username"],
         },
+        {
+          model: AlamatId,
+          attributes: ["nama"],
+        },
       ],
     });
 
@@ -73,9 +80,10 @@ export const getCustomerById = async (req, res) => {
       },
     });
 
-    // Tambahkan status dan handled_by (username) ke response
+    // Tambahkan status, handled_by (username), dan alamat_nama ke response
     const customerObj = customer.toJSON();
     customerObj.handled_by_username = customerObj.User?.username || null;
+    customerObj.alamat_nama = customerObj.AlamatId?.nama || null;
 
     res.json({
       customer: customerObj,

@@ -72,7 +72,7 @@ function App() {
             <Route path="dashboard/statistik" element={<StatistikPage token={token} user={user} />} />
             <Route path="dashboard/settings" element={<SettingsPage token={token} user={user} />} />
             <Route path="dashboard/customer/:id" element={<CustomerDetailPage token={token} user={user} />} />
-            <Route path="dashboard/manage-users" element={user?.role === 'superadmin' ? <ManageUsersPage token={token} /> : <Navigate to="/dashboard" />} />
+            <Route path="dashboard/manage-users" element={(user?.role === 'admin' || user?.role === 'superadmin') ? <ManageUsersPage token={token} /> : <Navigate to="/dashboard" />} />
             <Route path="dashboard/activity-logs" element={user?.role === 'superadmin' ? <ActivityLogsPage token={token} /> : <Navigate to="/dashboard" />} />
             <Route path="*" element={<Navigate to="/dashboard" />} />
           </Route>

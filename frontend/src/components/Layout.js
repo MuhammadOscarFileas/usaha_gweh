@@ -6,6 +6,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
+import HomeIcon from '@mui/icons-material/Home';
 import styled from 'styled-components';
 import logo from '../logo.svg';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
@@ -100,6 +101,7 @@ const menuItems = [
   { label: 'Pelanggan', icon: <PeopleIcon />, path: '/dashboard' },
   { label: 'Paket', icon: <InventoryIcon />, path: '/dashboard/paket', adminOnly: true },
   { label: 'Statistik', icon: <BarChartIcon />, path: '/dashboard/statistik' },
+  { label: 'Kelola Alamat', icon: <HomeIcon />, path: '/dashboard/alamat', adminOrSuperadmin: true },
   { label: 'Pengaturan', icon: <SettingsIcon />, path: '/dashboard/settings' },
   { label: 'Kelola Admin & Subadmin', icon: <PeopleIcon />, path: '/dashboard/manage-users', superadminOnly: true },
   { label: 'Log Aktivitas', icon: <BarChartIcon />, path: '/dashboard/activity-logs', superadminOnly: true },
@@ -166,6 +168,7 @@ export default function Layout({ children, onLogout, user }) {
             {menuItems.map(item => {
               if (item.adminOnly && userRole !== 'admin') return null;
               if (item.superadminOnly && userRole !== 'superadmin') return null;
+              if (item.adminOrSuperadmin && !(userRole === 'admin' || userRole === 'superadmin')) return null;
               const active = location.pathname === item.path || (item.path !== '/dashboard' && location.pathname.startsWith(item.path));
               const isLogoutItem = item.isLogout;
               

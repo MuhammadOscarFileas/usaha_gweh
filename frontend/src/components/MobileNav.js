@@ -11,6 +11,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function MobileNav({ user, onLogout }) {
@@ -21,6 +22,7 @@ export default function MobileNav({ user, onLogout }) {
     { label: 'Pelanggan', icon: <PeopleIcon />, path: '/dashboard' },
     ...(user.role === 'admin' ? [{ label: 'Paket', icon: <InventoryIcon />, path: '/dashboard/paket' }] : []),
     { label: 'Statistik', icon: <BarChartIcon />, path: '/dashboard/statistik' },
+    ...((user.role === 'admin' || user.role === 'superadmin') ? [{ label: 'Kelola Alamat', icon: <HomeIcon />, path: '/dashboard/alamat' }] : []),
     ...(user.role === 'superadmin' ? [
       { label: 'Kelola Admin', icon: <AdminPanelSettingsIcon />, path: '/dashboard/manage-users' },
       { label: 'Log Aktivitas', icon: <BarChartIcon />, path: '/dashboard/activity-logs' },

@@ -96,20 +96,27 @@ export const getCustomerById = async (req, res) => {
 };
 
 export const createCustomer = async (req, res) => {
-  // Pastikan status default 'active' jika tidak dikirim
-  const data = { ...req.body };
-  if (!data.status) data.status = 'active';
-  const newCustomer = await Customer.create(data);
+  try {
+    const data = { ...req.body };
+    if (!data.status) data.status = 'active';
+    // Validasi manual field wajib
+    if (!data.name || !data.handled_by || !data.package_id || !data.alamat_id_cust) {
+      return res.status(400).json({ msg: "Field wajib tidak boleh kosong" });
+    }
+    const newCustomer = await Customer.create(data);
 
-  await logActivity({
-    user_id: req.user.id,
-    action: "create_customer",
-    target_type: "customer",
-    target_id: newCustomer.id,
-    description: `${req.user.username} menambahkan pelanggan ${req.body.name}`
-  });
+    await logActivity({
+      user_id: req.user.id,
+      action: "create_customer",
+      target_type: "customer",
+      target_id: newCustomer.id,
+      description: `${req.user.username} menambahkan pelanggan ${req.body.name}`
+    });
 
-  res.status(201).json({ msg: "Pelanggan berhasil ditambahkan" });
+    res.status(201).json({ msg: "Pelanggan berhasil ditambahkan" });
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
 };
 
 export const updateCustomer = async (req, res) => {

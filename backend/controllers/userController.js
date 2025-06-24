@@ -87,7 +87,7 @@ export const getProfile = async (req, res) => {
 };
 
 export const getAllUsers = async (req, res) => {
-  if (req.user.role !== 'superadmin') return res.status(403).json({ msg: 'Hanya superadmin yang boleh.' });
+  if (req.user.role !== 'admin' && req.user.role !== 'superadmin') return res.status(403).json({ msg: 'Hanya admin/superadmin yang boleh.' });
   const users = await User.findAll({
     where: { role: ['admin', 'subadmin'] },
     attributes: ['id', 'username', 'role', 'wilayah']
@@ -96,7 +96,7 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
-  if (req.user.role !== 'superadmin') return res.status(403).json({ msg: 'Hanya superadmin yang boleh.' });
+  if (req.user.role !== 'admin' && req.user.role !== 'superadmin') return res.status(403).json({ msg: 'Hanya admin/superadmin yang boleh.' });
   const { username, password, role, wilayah } = req.body;
   if (!username || !password || !role || !['admin', 'subadmin'].includes(role)) {
     return res.status(400).json({ msg: 'Data tidak valid' });
@@ -110,7 +110,7 @@ export const createUser = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
-  if (req.user.role !== 'superadmin') return res.status(403).json({ msg: 'Hanya superadmin yang boleh.' });
+  if (req.user.role !== 'admin' && req.user.role !== 'superadmin') return res.status(403).json({ msg: 'Hanya admin/superadmin yang boleh.' });
   const { id } = req.params;
   const user = await User.findByPk(id);
   if (!user || !['admin', 'subadmin'].includes(user.role)) return res.status(404).json({ msg: 'User tidak ditemukan' });

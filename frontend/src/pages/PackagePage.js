@@ -16,7 +16,7 @@ export default function PackagePage({ token }) {
 
   const fetchPackages = async () => {
     try {
-      const res = await fetch('http://localhost:5000/abira-api/packages', {
+      const res = await fetch('https://usahagweh-production.up.railway.app/abira-api/packages', {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -57,7 +57,7 @@ export default function PackagePage({ token }) {
     try {
       let res, data;
       if (editId) {
-        res = await fetch(`http://localhost:5000/abira-api/packages/${editId}`, {
+        res = await fetch(`https://usahagweh-production.up.railway.app/abira-api/packages/${editId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export default function PackagePage({ token }) {
         if (!res.ok) throw new Error(data.msg || 'Gagal edit paket');
         setSuccess('Paket berhasil diupdate');
       } else {
-        res = await fetch('http://localhost:5000/abira-api/packages', {
+        res = await fetch('https://usahagweh-production.up.railway.app/abira-api/packages', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export default function PackagePage({ token }) {
   const confirmDelete = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/abira-api/packages/${deleteId}`, {
+      const res = await fetch(`https://usahagweh-production.up.railway.app/abira-api/packages/${deleteId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });

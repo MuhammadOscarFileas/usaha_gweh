@@ -17,7 +17,7 @@ export default function StatistikPage({ user, token }) {
   useEffect(() => {
     setLoadingCustomers(true);
     setFetchError('');
-    fetch('http://localhost:5000/abira-api/customers', {
+    fetch('https://usahagweh-production.up.railway.app/abira-api/customers', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -31,7 +31,7 @@ export default function StatistikPage({ user, token }) {
 
   useEffect(() => {
     // Fetch payments for selected month/year
-    fetch(`http://localhost:5000/abira-api/payments?tahun=${year}&bulan=${month}`, {
+    fetch(`https://usahagweh-production.up.railway.app/abira-api/payments?tahun=${year}&bulan=${month}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -41,7 +41,7 @@ export default function StatistikPage({ user, token }) {
 
   useEffect(() => {
     // Fetch packages for price lookup
-    fetch('http://localhost:5000/abira-api/packages', {
+    fetch('https://usahagweh-production.up.railway.app/abira-api/packages', {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())

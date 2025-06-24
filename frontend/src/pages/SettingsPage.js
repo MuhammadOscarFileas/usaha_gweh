@@ -59,7 +59,7 @@ export default function SettingsPage({ user, token }) {
         updateData.newPassword = profileForm.newPassword;
       }
 
-      const response = await fetch(`http://localhost:5000/abira-api/users/profile`, {
+      const response = await fetch(`https://usahagweh-production.up.railway.app/abira-api/users/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

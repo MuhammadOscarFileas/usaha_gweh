@@ -56,7 +56,7 @@ const CustomerDetailPage = ({ token }) => {
       setLoading(true);
       setError('');
       try {
-        const response = await fetch(`http://localhost:5000/abira-api/customers/${id}`, {
+        const response = await fetch(`https://usahagweh-production.up.railway.app/abira-api/customers/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -108,7 +108,7 @@ const CustomerDetailPage = ({ token }) => {
   const handleEditOpen = async () => {
     // Fetch packages
     try {
-      const res = await fetch('http://localhost:5000/abira-api/packages', {
+      const res = await fetch('https://usahagweh-production.up.railway.app/abira-api/packages', {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -148,7 +148,7 @@ const CustomerDetailPage = ({ token }) => {
     setEditError('');
     setEditSuccess('');
     try {
-      const res = await fetch(`http://localhost:5000/abira-api/customers/${customer.id}`, {
+      const res = await fetch(`https://usahagweh-production.up.railway.app/abira-api/customers/${customer.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ const CustomerDetailPage = ({ token }) => {
       if (newStatus === 'inactive' && !customer.end_date) {
         body.end_date = new Date().toISOString().slice(0, 10);
       }
-      const res = await fetch(`http://localhost:5000/abira-api/customers/${customer.id}`, {
+      const res = await fetch(`https://usahagweh-production.up.railway.app/abira-api/customers/${customer.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

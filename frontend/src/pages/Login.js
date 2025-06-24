@@ -38,7 +38,7 @@ export default function Login({ onLogin }) {
     setError('');
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/abira-api/users/login', {
+      const res = await fetch('https://usahagweh-production.up.railway.app/abira-api/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })

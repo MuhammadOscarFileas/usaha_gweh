@@ -94,7 +94,7 @@ export default function Dashboard({ user, token }) {
     // Fetch data paket untuk dropdown
     const fetchPackages = async () => {
       try {
-        const res = await fetch('http://localhost:5000/abira-api/packages', {
+        const res = await fetch('https://usahagweh-production.up.railway.app/abira-api/packages', {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
@@ -112,7 +112,7 @@ export default function Dashboard({ user, token }) {
       setLoadingCustomers(true);
       setFetchError('');
       try {
-        const res = await fetch('http://localhost:5000/abira-api/customers', {
+        const res = await fetch('https://usahagweh-production.up.railway.app/abira-api/customers', {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
@@ -130,7 +130,7 @@ export default function Dashboard({ user, token }) {
   // Fetch subadmin list jika user admin dan dialog open
   useEffect(() => {
     if (user.role === 'admin' && open) {
-      fetch('http://localhost:5000/abira-api/users?role=subadmin', {
+      fetch('https://usahagweh-production.up.railway.app/abira-api/users?role=subadmin', {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())
@@ -141,7 +141,7 @@ export default function Dashboard({ user, token }) {
 
   // Fetch payments for selected year
   useEffect(() => {
-    fetch(`http://localhost:5000/abira-api/payments?tahun=${year}`, {
+    fetch(`https://usahagweh-production.up.railway.app/abira-api/payments?tahun=${year}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -200,7 +200,7 @@ export default function Dashboard({ user, token }) {
     try {
       let res, data;
       if (editId) {
-        res = await fetch(`http://localhost:5000/abira-api/customers/${editId}`, {
+        res = await fetch(`https://usahagweh-production.up.railway.app/abira-api/customers/${editId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -217,7 +217,7 @@ export default function Dashboard({ user, token }) {
         if (!res.ok) throw new Error(data.msg || 'Gagal edit pelanggan');
         setSuccess('Pelanggan berhasil diupdate');
       } else {
-        res = await fetch('http://localhost:5000/abira-api/customers', {
+        res = await fetch('https://usahagweh-production.up.railway.app/abira-api/customers', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -262,7 +262,7 @@ export default function Dashboard({ user, token }) {
   // Update payment status
   const handlePaymentChange = async (customer_id, bulan, status) => {
     const tanggal_bayar = status === 'Lunas' ? dayjs().format('YYYY-MM-DD') : null;
-    await fetch('http://localhost:5000/abira-api/payments', {
+    await fetch('https://usahagweh-production.up.railway.app/abira-api/payments', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -277,7 +277,7 @@ export default function Dashboard({ user, token }) {
       })
     });
     // Refresh payments
-    fetch(`http://localhost:5000/abira-api/payments?tahun=${year}`, {
+    fetch(`https://usahagweh-production.up.railway.app/abira-api/payments?tahun=${year}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())

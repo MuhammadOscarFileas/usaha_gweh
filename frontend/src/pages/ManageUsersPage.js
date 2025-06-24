@@ -3,7 +3,7 @@ import { Box, Typography, Button, Table, TableHead, TableRow, TableCell, TableBo
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 
-const API = 'http://localhost:5000/abira-api/users';
+const API = 'https://usahagweh-production.up.railway.app/abira-api/users';
 
 export default function ManageUsersPage({ token }) {
   const [users, setUsers] = useState([]);

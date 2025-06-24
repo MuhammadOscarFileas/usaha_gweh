@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Table, TableHead, TableRow, TableCell, TableBody, CircularProgress, Alert, Paper } from '@mui/material';
 
-const API = 'http://localhost:5000/abira-api/users/activity-logs';
+const API = 'https://usahagweh-production.up.railway.app/abira-api/users/activity-logs';
 
 export default function ActivityLogsPage({ token }) {
   const [logs, setLogs] = useState([]);

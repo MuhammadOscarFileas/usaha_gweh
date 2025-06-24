@@ -159,7 +159,7 @@ export default function Dashboard({ user, token }) {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())
-        .then(data => setAlamatList(data))
+        .then(data => setAlamatList(Array.isArray(data) ? data : []))
         .catch(() => setAlamatList([]));
     }
   }, [open, token]);
@@ -618,9 +618,11 @@ export default function Dashboard({ user, token }) {
                   margin="normal"
                   required
                 >
-                  {alamatList.map(alamat => (
+                  {Array.isArray(alamatList) && alamatList.length > 0 ? alamatList.map(alamat => (
                     <MenuItem key={alamat.id} value={alamat.id}>{alamat.nama}</MenuItem>
-                  ))}
+                  )) : (
+                    <MenuItem value="" disabled>Tidak ada data alamat</MenuItem>
+                  )}
                 </TextField>
               </Grid>
               {user.role === 'admin' && (

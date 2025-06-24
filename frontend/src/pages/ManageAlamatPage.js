@@ -24,9 +24,11 @@ export default function ManageAlamatPage({ token, user }) {
     try {
       const res = await fetch(API, { headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json();
-      setAlamat(data);
+      setAlamat(Array.isArray(data) ? data : []);
+      if (!Array.isArray(data)) setError('Data alamat tidak valid atau token expired.');
     } catch (e) {
       setError('Gagal mengambil data alamat');
+      setAlamat([]);
     } finally {
       setLoading(false);
     }
@@ -120,7 +122,7 @@ export default function ManageAlamatPage({ token, user }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {alamat.map(a => (
+            {Array.isArray(alamat) && alamat.length > 0 ? alamat.map(a => (
               <TableRow key={a.id}>
                 <TableCell>{a.nama}</TableCell>
                 <TableCell align="right">
@@ -128,7 +130,11 @@ export default function ManageAlamatPage({ token, user }) {
                   <IconButton color="error" onClick={() => { setOpenDelete(true); setDeleteId(a.id); }}><DeleteIcon /></IconButton>
                 </TableCell>
               </TableRow>
-            ))}
+            )) : (
+              <TableRow>
+                <TableCell colSpan={2} align="center">Tidak ada data alamat</TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       )}

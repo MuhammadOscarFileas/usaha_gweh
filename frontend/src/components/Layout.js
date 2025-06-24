@@ -102,7 +102,7 @@ const menuItems = [
   { label: 'Paket', icon: <InventoryIcon />, path: '/dashboard/paket', adminOrSuperadmin: true },
   { label: 'Statistik', icon: <BarChartIcon />, path: '/dashboard/statistik' },
   { label: 'Pengaturan', icon: <SettingsIcon />, path: '/dashboard/settings' },
-  { label: 'Kelola Admin & Subadmin', icon: <PeopleIcon />, path: '/dashboard/manage-users', superadminOnly: true },
+  { label: 'Kelola Admin & Subadmin', icon: <PeopleIcon />, path: '/dashboard/manage-users', adminOrSuperadmin: true },
   { label: 'Log Aktivitas', icon: <BarChartIcon />, path: '/dashboard/activity-logs', superadminOnly: true },
   { label: 'Logout', icon: <LogoutIcon />, path: '/logout', isLogout: true },
 ];

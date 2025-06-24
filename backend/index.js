@@ -41,7 +41,7 @@ const startServer = async () => {
     await db.authenticate();
     console.log("✅ Database connected...");
 
-    await db.sync({ alter: true }); // Gunakan { alter: true } saat pengembangan
+    await db.sync({ force: true }); // WARNING: Semua tabel akan di-drop dan dibuat ulang!
     console.log("✅ Database synced...");
 
     app.listen(PORT, "0.0.0.0", () => {

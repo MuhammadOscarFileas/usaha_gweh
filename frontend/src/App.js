@@ -9,7 +9,6 @@ import Layout from './components/Layout';
 import CustomerDetailPage from './pages/CustomerDetailPage';
 import ManageUsersPage from './pages/ManageUsersPage';
 import ActivityLogsPage from './pages/ActivityLogsPage';
-import ManageAlamatPage from './pages/ManageAlamatPage';
 import './App.css';
 
 // Helper function to decode JWT
@@ -75,7 +74,6 @@ function App() {
             <Route path="dashboard/customer/:id" element={<CustomerDetailPage token={token} user={user} />} />
             <Route path="dashboard/manage-users" element={user?.role === 'superadmin' ? <ManageUsersPage token={token} /> : <Navigate to="/dashboard" />} />
             <Route path="dashboard/activity-logs" element={user?.role === 'superadmin' ? <ActivityLogsPage token={token} /> : <Navigate to="/dashboard" />} />
-            <Route path="dashboard/alamat" element={user?.role === 'admin' || user?.role === 'superadmin' ? <ManageAlamatPage token={token} user={user} /> : <Navigate to="/dashboard" />} />
             <Route path="*" element={<Navigate to="/dashboard" />} />
           </Route>
         )}

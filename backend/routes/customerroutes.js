@@ -7,17 +7,10 @@ import {
   deleteCustomer
 } from "../controllers/customerController.js";
 import { verifyToken } from "../middleware/verifytoken.js";
-import { getAllAlamat, createAlamat, updateAlamat, deleteAlamat } from "../controllers/alamat_id_controller.js";
 //import multer from "multer";
 
 const router = express.Router();
 //const upload = multer({ dest: "uploads/" });
-
-// Pindahkan route alamat ke atas
-router.get("/alamat", verifyToken, getAllAlamat);
-router.post("/alamat", verifyToken, createAlamat);
-router.put("/alamat/:id", verifyToken, updateAlamat);
-router.delete("/alamat/:id", verifyToken, deleteAlamat);
 
 router.get("/", verifyToken, getCustomers);
 router.get("/:id", verifyToken, getCustomerById);

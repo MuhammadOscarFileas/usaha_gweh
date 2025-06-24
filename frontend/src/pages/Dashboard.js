@@ -28,7 +28,7 @@ export default function Dashboard({ user, token }) {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
     name: '',
-    alias: '',
+    nik: '',
     address: '',
     phone: '',
     start_date: '',
@@ -60,7 +60,6 @@ export default function Dashboard({ user, token }) {
   const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
   const { collapsed } = React.useContext(SidebarContext);
   const sidebarWidth = isMobile ? 0 : (collapsed ? 64 : 220);
-  const [alamatList, setAlamatList] = useState([]);
 
   const navigate = useNavigate();
 
@@ -152,21 +151,6 @@ export default function Dashboard({ user, token }) {
       .catch(() => setPayments([]));
   }, [year, token, open]);
 
-  // Fetch alamat untuk dropdown
-  useEffect(() => {
-    if (open) {
-      fetch('https://usahagweh-production.up.railway.app/abira-api/customers/alamat', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-        .then(res => res.json())
-        .then(data => {
-          const arr = Array.isArray(data) ? data : (Array.isArray(data.alamat) ? data.alamat : []);
-          setAlamatList(arr);
-        })
-        .catch(() => setAlamatList([]));
-    }
-  }, [open, token]);
-
   useEffect(() => {
     if (filterBarRef.current) {
       setFilterBarHeight(filterBarRef.current.offsetHeight);
@@ -177,7 +161,7 @@ export default function Dashboard({ user, token }) {
   const handleClose = () => {
     setOpen(false);
     setForm({
-      name: '', alias: '', address: '', phone: '', start_date: '', end_date: '', google_maps_link: '', package_id: '', alamat_id_cust: '', handled_by: '',
+      name: '', nik: '', address: '', phone: '', start_date: '', end_date: '', google_maps_link: '', package_id: '', alamat_id_cust: '', handled_by: '',
     });
     setError('');
     setSuccess('');
@@ -196,7 +180,7 @@ export default function Dashboard({ user, token }) {
     if (selectedCustomer) {
       setForm({
         name: selectedCustomer.name || '',
-        alias: selectedCustomer.alias || '',
+        nik: selectedCustomer.nik || '',
         address: selectedCustomer.address || '',
         phone: selectedCustomer.phone || '',
         start_date: selectedCustomer.start_date ? selectedCustomer.start_date.slice(0, 10) : '',
@@ -524,14 +508,16 @@ export default function Dashboard({ user, token }) {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField 
-                  label="Alias/Nama Panggilan" 
-                  name="alias" 
-                  value={form.alias} 
-                  onChange={handleChange} 
-                  fullWidth 
-                  margin="normal" 
-                  placeholder="Nama panggilan atau alias"
+                <TextField
+                  label="NIK"
+                  name="nik"
+                  value={form.nik}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                  required
+                  placeholder="Masukkan NIK pelanggan"
+                  inputProps={{ maxLength: 32 }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -546,16 +532,15 @@ export default function Dashboard({ user, token }) {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField 
-                  label="Alamat Lengkap" 
-                  name="address" 
-                  value={form.address} 
-                  onChange={handleChange} 
-                  fullWidth 
-                  margin="normal" 
-                  multiline
-                  rows={isMobile ? 2 : 3}
-                  placeholder="Masukkan alamat lengkap pelanggan"
+                <TextField
+                  label="Alamat"
+                  name="address"
+                  value={form.address}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                  required
+                  placeholder="Masukkan alamat pelanggan"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -608,24 +593,6 @@ export default function Dashboard({ user, token }) {
                   {packages.map(pkg => (
                     <MenuItem key={pkg.id} value={pkg.id}>{pkg.name} (Rp{pkg.price})</MenuItem>
                   ))}
-                </TextField>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  select
-                  label="Alamat (Pilih dari master alamat)"
-                  name="alamat_id_cust"
-                  value={form.alamat_id_cust || ''}
-                  onChange={handleChange}
-                  fullWidth
-                  margin="normal"
-                  required
-                >
-                  {Array.isArray(alamatList) && alamatList.length > 0 ? alamatList.map(alamat => (
-                    <MenuItem key={alamat.id} value={alamat.id}>{alamat.nama}</MenuItem>
-                  )) : (
-                    <MenuItem value="" disabled>Tidak ada data alamat</MenuItem>
-                  )}
                 </TextField>
               </Grid>
               {(user.role === 'admin' || user.role === 'superadmin') && (

@@ -159,7 +159,10 @@ export default function Dashboard({ user, token }) {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())
-        .then(data => setAlamatList(Array.isArray(data) ? data : []))
+        .then(data => {
+          const arr = Array.isArray(data) ? data : (Array.isArray(data.alamat) ? data.alamat : []);
+          setAlamatList(arr);
+        })
         .catch(() => setAlamatList([]));
     }
   }, [open, token]);

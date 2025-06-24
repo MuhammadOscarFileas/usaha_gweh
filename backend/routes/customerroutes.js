@@ -13,6 +13,12 @@ import { getAllAlamat, createAlamat, updateAlamat, deleteAlamat } from "../contr
 const router = express.Router();
 //const upload = multer({ dest: "uploads/" });
 
+// Pindahkan route alamat ke atas
+router.get("/alamat", verifyToken, getAllAlamat);
+router.post("/alamat", verifyToken, createAlamat);
+router.put("/alamat/:id", verifyToken, updateAlamat);
+router.delete("/alamat/:id", verifyToken, deleteAlamat);
+
 router.get("/", verifyToken, getCustomers);
 router.get("/:id", verifyToken, getCustomerById);
 router.post("/", verifyToken, createCustomer);
@@ -27,10 +33,5 @@ router.post("/customers", verifyToken, createCustomer);
 router.get("/customers/:id", verifyToken, getCustomerById);
 router.put("/customers/:id", verifyToken, updateCustomer);
 router.delete("/customers/:id", verifyToken, deleteCustomer);
-
-router.get("/alamat", verifyToken, getAllAlamat);
-router.post("/alamat", verifyToken, createAlamat);
-router.put("/alamat/:id", verifyToken, updateAlamat);
-router.delete("/alamat/:id", verifyToken, deleteAlamat);
 
 export default router;

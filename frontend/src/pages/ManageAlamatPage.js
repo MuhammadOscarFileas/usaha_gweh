@@ -24,8 +24,10 @@ export default function ManageAlamatPage({ token, user }) {
     try {
       const res = await fetch(API, { headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json();
-      setAlamat(Array.isArray(data) ? data : []);
-      if (!Array.isArray(data)) setError('Data alamat tidak valid atau token expired.');
+      const arr = Array.isArray(data) ? data : (Array.isArray(data.alamat) ? data.alamat : []);
+      setAlamat(arr);
+      if (!Array.isArray(arr)) setError(data.msg || 'Data alamat tidak valid atau token expired.');
+      else if (arr.length === 0 && data.msg) setError(data.msg);
     } catch (e) {
       setError('Gagal mengambil data alamat');
       setAlamat([]);

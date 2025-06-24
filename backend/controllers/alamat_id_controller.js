@@ -1,8 +1,15 @@
 import AlamatId from "../models/alamat_id_model.js";
 
 export const getAllAlamat = async (req, res) => {
-  const alamat = await AlamatId.findAll();
-  res.json(alamat);
+  try {
+    const alamat = await AlamatId.findAll();
+    if (!alamat || alamat.length === 0) {
+      return res.json({ alamat: [], msg: 'Data alamat kosong' });
+    }
+    res.json({ alamat, msg: 'Sukses ambil data alamat' });
+  } catch (err) {
+    res.status(500).json({ alamat: [], msg: 'Gagal mengambil data alamat', error: err.message });
+  }
 };
 
 export const createAlamat = async (req, res) => {

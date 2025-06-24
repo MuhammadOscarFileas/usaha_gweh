@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+:root {
+  --primary-blue: #2563eb;
+  --sidebar-bg: #1e293b;
+  --sidebar-active: #2563eb;
+  --sidebar-text: #fff;
+  --sidebar-hover: #334155;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Table container scroll only */
+.dashboard-table-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.dashboard-table {
+  min-width: 1400px;
+  width: max-content;
+}
+
+/* Desktop specific scroll */
+@media (min-width: 769px) {
+  .dashboard-table-container {
+    overflow-x: scroll !important;
+    overflow-y: hidden !important;
+  }
+}
+
+/* Mobile navigation fixes */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 80px;
+  }
+  
+  .dashboard-table-container {
+    overflow-x: auto;
+  }
+}

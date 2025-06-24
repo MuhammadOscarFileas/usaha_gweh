@@ -82,8 +82,14 @@ export default function StatistikPage({ user, token }) {
   };
   // Total uang masuk bulan ini
   const totalMasuk = payments.filter(p => p.status === 'Lunas').reduce((sum, p) => sum + getPrice(p.customer_id), 0);
-  // Total uang belum masuk bulan ini (hanya status 'Belum')
-  const totalBelum = payments.filter(p => p.status === 'Belum').reduce((sum, p) => sum + getPrice(p.customer_id), 0);
+  // Total uang belum masuk bulan ini (benar-benar deteksi semua pelanggan aktif yang belum bayar)
+  const totalBelum = pelangganAktif.reduce((sum, c) => {
+    const payment = payments.find(p => p.customer_id === c.id);
+    if (!payment || payment.status === 'Belum') {
+      return sum + getPrice(c.id);
+    }
+    return sum;
+  }, 0);
 
   // Pelanggan yang sudah bayar bulan ini
   const pelangganSudahBayar = pelangganAktif.filter(c =>

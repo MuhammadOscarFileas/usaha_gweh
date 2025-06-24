@@ -20,7 +20,7 @@ export default function MobileNav({ user, onLogout }) {
 
   const menuItems = [
     { label: 'Pelanggan', icon: <PeopleIcon />, path: '/dashboard' },
-    ...(user.role === 'admin' ? [{ label: 'Paket', icon: <InventoryIcon />, path: '/dashboard/paket' }] : []),
+    ...((user.role === 'admin' || user.role === 'superadmin') ? [{ label: 'Paket', icon: <InventoryIcon />, path: '/dashboard/paket' }] : []),
     { label: 'Statistik', icon: <BarChartIcon />, path: '/dashboard/statistik' },
     ...((user.role === 'admin' || user.role === 'superadmin') ? [{ label: 'Kelola Alamat', icon: <HomeIcon />, path: '/dashboard/alamat' }] : []),
     ...(user.role === 'superadmin' ? [

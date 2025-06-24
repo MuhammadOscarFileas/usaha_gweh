@@ -99,7 +99,7 @@ const HamburgerButton = styled(IconButton)`
 
 const menuItems = [
   { label: 'Pelanggan', icon: <PeopleIcon />, path: '/dashboard' },
-  { label: 'Paket', icon: <InventoryIcon />, path: '/dashboard/paket', adminOnly: true },
+  { label: 'Paket', icon: <InventoryIcon />, path: '/dashboard/paket', adminOrSuperadmin: true },
   { label: 'Statistik', icon: <BarChartIcon />, path: '/dashboard/statistik' },
   { label: 'Kelola Alamat', icon: <HomeIcon />, path: '/dashboard/alamat', adminOrSuperadmin: true },
   { label: 'Pengaturan', icon: <SettingsIcon />, path: '/dashboard/settings' },

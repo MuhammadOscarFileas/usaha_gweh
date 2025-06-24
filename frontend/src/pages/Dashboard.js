@@ -628,7 +628,7 @@ export default function Dashboard({ user, token }) {
                   )}
                 </TextField>
               </Grid>
-              {user.role === 'admin' && (
+              {(user.role === 'admin' || user.role === 'superadmin') && (
                 <Grid item xs={12} sm={6}>
                   <TextField
                     select

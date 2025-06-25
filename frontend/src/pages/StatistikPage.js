@@ -64,10 +64,10 @@ export default function StatistikPage({ user, token }) {
     // Bulan ke-i (0=Jan)
     const bulan = i + 1;
     const jumlah = pelangganAktif.filter(c => {
-      const created = c.createdAt ? dayjs(c.createdAt) : (c.created_at ? dayjs(c.created_at) : null);
-      if (!created) return false;
-      const isThisYear = created.year() === year;
-      const isThisMonth = created.month() + 1 === bulan;
+      const started = c.start_date ? dayjs(c.start_date) : null;
+      if (!started) return false;
+      const isThisYear = started.year() === year;
+      const isThisMonth = started.month() + 1 === bulan;
       return isThisYear && isThisMonth;
     }).length;
     return { bulan: monthNames[i], jumlah };

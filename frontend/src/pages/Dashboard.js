@@ -35,7 +35,6 @@ export default function Dashboard({ user, token }) {
     end_date: '',
     google_maps_link: '',
     package_id: '',
-    alamat_id_cust: '',
     handled_by: '',
     alamat_id: '',
   });
@@ -162,7 +161,7 @@ export default function Dashboard({ user, token }) {
   const handleClose = () => {
     setOpen(false);
     setForm({
-      name: '', nik: '', address: '', phone: '', start_date: '', end_date: '', google_maps_link: '', package_id: '', alamat_id_cust: '', handled_by: '', alamat_id: '',
+      name: '', nik: '', address: '', phone: '', start_date: '', end_date: '', google_maps_link: '', package_id: '', handled_by: '', alamat_id: '',
     });
     setError('');
     setSuccess('');
@@ -189,7 +188,6 @@ export default function Dashboard({ user, token }) {
         google_maps_link: selectedCustomer.google_maps_link || '',
         package_id: selectedCustomer.package_id ? String(selectedCustomer.package_id) : '',
         handled_by: selectedCustomer.handled_by || '',
-        alamat_id_cust: selectedCustomer.alamat_id_cust || '',
         alamat_id: selectedCustomer.alamat_id || '',
       });
       setEditId(selectedCustomer.id);
@@ -617,7 +615,7 @@ export default function Dashboard({ user, token }) {
                 <TextField
                   label="Alamat Id"
                   name="alamat_id"
-                  value={form.alamat_id_cust || ''}
+                  value={form.alamat_id || ''}
                   onChange={handleChange}
                   fullWidth
                   margin="normal"

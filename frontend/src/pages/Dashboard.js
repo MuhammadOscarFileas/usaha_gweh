@@ -129,9 +129,8 @@ export default function Dashboard({ user, token }) {
     fetchCustomers();
   }, [open]);
 
-  // Fetch subadmin list jika user admin dan dialog open
-  useEffect(() => {
-    if ((['admin', 'superadmin', 'subadmin'].includes(user.role)) && open) {
+  const fetchSubadmins = useCallback(() => {
+    if ((['admin', 'superadmin', 'subadmin'].includes(user.role))) {
       fetch('https://usahagweh-production.up.railway.app/abira-api/users?role=subadmin', {
         headers: { Authorization: `Bearer ${token}` }
       })
@@ -139,7 +138,14 @@ export default function Dashboard({ user, token }) {
         .then(data => setSubadmins(data))
         .catch(() => setSubadmins([]));
     }
-  }, [user.role, open, token]);
+  }, [user.role, token]);
+
+  useEffect(() => {
+    if (open) {
+      fetchPackages();
+      fetchSubadmins();
+    }
+  }, [open, fetchSubadmins]);
 
   // Fetch payments for selected year
   useEffect(() => {
@@ -178,6 +184,7 @@ export default function Dashboard({ user, token }) {
   };
   const handleEditCustomer = () => {
     if (selectedCustomer) {
+      fetchSubadmins();
       setForm({
         name: selectedCustomer.name || '',
         nik: selectedCustomer.nik || '',

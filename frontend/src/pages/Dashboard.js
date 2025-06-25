@@ -132,7 +132,7 @@ export default function Dashboard({ user, token }) {
 
   // Fetch subadmin list jika user admin dan dialog open
   useEffect(() => {
-    if (user.role === 'admin' && open) {
+    if ((['admin', 'superadmin', 'subadmin'].includes(user.role)) && open) {
       fetch('https://usahagweh-production.up.railway.app/abira-api/users?role=subadmin', {
         headers: { Authorization: `Bearer ${token}` }
       })

@@ -613,9 +613,9 @@ export default function Dashboard({ user, token }) {
                   margin="normal"
                 >
                   <MenuItem value="">- Tidak Ditentukan -</MenuItem>
-                  {subadmins.map(sa => (
+                  {(subadmins && subadmins.length > 0) ? subadmins.map(sa => (
                     <MenuItem key={sa.id} value={sa.id}>{sa.username}</MenuItem>
-                  ))}
+                  )) : null}
                 </TextField>
               </Grid>
               <Grid item xs={12} sm={6}>

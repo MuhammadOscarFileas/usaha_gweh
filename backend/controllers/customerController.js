@@ -92,7 +92,7 @@ export const createCustomer = async (req, res) => {
     const data = { ...req.body };
     if (!data.status) data.status = 'active';
     // Validasi manual field wajib
-    if (!data.name || !data.handled_by || !data.package_id || !data.alamat_id_cust) {
+    if (!data.name || !data.handled_by || !data.package_id) {
       return res.status(400).json({ msg: "Field wajib tidak boleh kosong" });
     }
     const newCustomer = await Customer.create(data);

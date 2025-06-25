@@ -423,10 +423,15 @@ export default function Dashboard({ user, token }) {
                     const start = c.start_date ? dayjs(c.start_date) : null;
                     const isInactive = c.status === 'inactive';
                     return (
-                      <tr 
-                        key={c.id} 
-                        onClick={() => navigate(`/dashboard/customer/${c.id}`)}
-                        style={{ cursor: 'pointer', background: isInactive ? '#f5f5f5' : undefined, textDecoration: isInactive ? 'line-through' : undefined, color: isInactive ? '#888' : undefined }}
+                      <tr
+                        key={c.id}
+                        onClick={user.role === 'subadmin' ? undefined : () => navigate(`/dashboard/customer/${c.id}`)}
+                        style={{
+                          cursor: user.role === 'subadmin' ? 'not-allowed' : 'pointer',
+                          background: isInactive ? '#f5f5f5' : undefined,
+                          textDecoration: isInactive ? 'line-through' : undefined,
+                          color: isInactive ? '#888' : undefined
+                        }}
                       >
                         <td className="sticky-name">
                           <div className="customer-name-cell">

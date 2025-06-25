@@ -92,21 +92,21 @@ export default function Dashboard({ user, token }) {
     };
   }, []); // The empty dependency array ensures this effect runs only once
 
+  const fetchPackages = useCallback(async () => {
+    try {
+      const res = await fetch('https://usahagweh-production.up.railway.app/abira-api/packages', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      setPackages(data);
+    } catch (err) {
+      setPackages([]);
+    }
+  }, [token]);
+
   useEffect(() => {
-    // Fetch data paket untuk dropdown
-    const fetchPackages = async () => {
-      try {
-        const res = await fetch('https://usahagweh-production.up.railway.app/abira-api/packages', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        const data = await res.json();
-        setPackages(data);
-      } catch (err) {
-        setPackages([]);
-      }
-    };
     if (open) fetchPackages();
-  }, [open, token]);
+  }, [open, fetchPackages]);
 
   // Fetch customers saat komponen mount atau setelah tambah pelanggan
   useEffect(() => {

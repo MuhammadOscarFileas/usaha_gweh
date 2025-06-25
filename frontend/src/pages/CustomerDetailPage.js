@@ -290,6 +290,12 @@ const CustomerDetailPage = ({ token }) => {
           </Grid>
           <Grid item xs={12} md={6}>
             <ListItem>
+              <ListItemIcon><HomeIcon /></ListItemIcon>
+              <ListItemText primary="Alamat ID" secondary={customer.alamat_id || '-'} />
+            </ListItem>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <ListItem>
               <ListItemIcon><EventIcon /></ListItemIcon>
               <ListItemText primary="Tanggal Mulai" secondary={start_date ? dayjs(start_date).format('DD MMMM YYYY') : '-'} />
             </ListItem>

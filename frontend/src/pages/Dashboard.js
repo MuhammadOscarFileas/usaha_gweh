@@ -213,11 +213,10 @@ export default function Dashboard({ user, token }) {
           },
           body: JSON.stringify({
             ...form,
-            handled_by: user.role === 'admin' ? (form.handled_by || null) : user.id,
+            handled_by: form.handled_by || null,
             package_id: Number(form.package_id),
             google_maps_link: form.google_maps_link || null,
-            alamat_id_cust: Number(form.alamat_id_cust),
-            alamat_id: Number(form.alamat_id),
+            alamat_id: form.alamat_id,
           })
         });
         data = await res.json();
@@ -232,11 +231,10 @@ export default function Dashboard({ user, token }) {
           },
           body: JSON.stringify({
             ...form,
-            handled_by: user.role === 'admin' ? (form.handled_by || null) : user.id,
+            handled_by: form.handled_by || null,
             package_id: Number(form.package_id),
             google_maps_link: form.google_maps_link || null,
-            alamat_id_cust: Number(form.alamat_id_cust),
-            alamat_id: Number(form.alamat_id),
+            alamat_id: form.alamat_id,
           })
         });
         data = await res.json();
@@ -619,11 +617,11 @@ export default function Dashboard({ user, token }) {
                 <TextField
                   label="Alamat Id"
                   name="alamat_id"
-                  value={form.alamat_id || ''}
+                  value={form.alamat_id_cust || ''}
                   onChange={handleChange}
                   fullWidth
                   margin="normal"
-                  placeholder="Masukkan Alamat Id (opsional)"
+                  placeholder="Masukkan Alamat Id"
                 />
               </Grid>
             </Grid>

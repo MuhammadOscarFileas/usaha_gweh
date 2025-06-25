@@ -38,8 +38,13 @@ export const getCustomers = async (req, res) => {
 
 export const getCustomerById = async (req, res) => {
   try {
+    // Subadmin tidak boleh akses detail customer sama sekali
+    if (req.user.role === "subadmin") {
+      return res.status(403).json({ msg: "Subadmin tidak diizinkan melihat detail customer" });
+    }
+    let where = { id: req.params.id };
     const customer = await Customer.findOne({
-      where: { id: req.params.id },
+      where,
       include: [
         {
           model: Package,

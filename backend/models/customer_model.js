@@ -10,6 +10,7 @@ const Customer = db.define("Customer", {
   },
   nik: DataTypes.STRING,
   address: DataTypes.TEXT,
+  alamat_id: DataTypes.STRING,
   phone: DataTypes.STRING,
   start_date: DataTypes.DATEONLY,
   end_date: DataTypes.DATEONLY,
